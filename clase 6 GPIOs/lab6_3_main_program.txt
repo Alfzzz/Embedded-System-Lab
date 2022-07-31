@@ -1,0 +1,102 @@
+#include <asf.h>
+
+
+/** \brief Main function to alter the state of the pin \c GPIO_PIN_EXAMPLE.
+ */
+
+void DecimalToBinary (int binary[3], int numero);
+
+int main(void)
+{
+	int numero = 0; ////Definición del arreglo de números.
+	int binary [3] = {0 ,0 ,0};
+	int nuevoDato=0;
+	int enter=0;
+	while(1){
+			if(enter==1){
+				binary[0]=0;
+				binary[1]=0;
+				binary[2]=0;
+			}
+			enter=0;
+			if (binary[0] == 0){
+				gpio_set_gpio_pin(LED0_GPIO);
+			}
+			else{
+				gpio_clr_gpio_pin(LED0_GPIO);
+			}
+			if (binary[1] == 0){
+				gpio_set_gpio_pin(LED1_GPIO);
+			}
+			else{
+				gpio_clr_gpio_pin(LED1_GPIO);
+			}
+			if (binary[2] == 0){
+				gpio_set_gpio_pin(LED2_GPIO);
+			}
+			else{
+				gpio_clr_gpio_pin(LED2_GPIO);
+			}
+			while(true){
+				if (gpio_get_pin_value(QT1081_TOUCH_SENSOR_ENTER) == true) {
+					enter=1;
+					break;
+				}
+				if (gpio_get_pin_value(QT1081_TOUCH_SENSOR_UP) == true) {
+					nuevoDato=1;
+					gpio_clr_gpio_pin(LED3_GPIO);
+					while(gpio_get_pin_value(QT1081_TOUCH_SENSOR_UP) == true){
+					}
+					break;
+			
+				}
+				if (gpio_get_pin_value(QT1081_TOUCH_SENSOR_DOWN) == true) {
+					nuevoDato=0;
+					gpio_set_gpio_pin(LED3_GPIO);
+					while(gpio_get_pin_value(QT1081_TOUCH_SENSOR_DOWN) == true){
+					}
+					break;
+				}
+				
+			}
+			while(enter==0){
+				if (gpio_get_pin_value(QT1081_TOUCH_SENSOR_ENTER) == true) {
+					enter=1;
+					break;
+				}
+
+				if (gpio_get_pin_value(QT1081_TOUCH_SENSOR_DOWN) == true) {
+					nuevoDato=0;
+					gpio_set_gpio_pin(LED3_GPIO);
+					while(gpio_get_pin_value(QT1081_TOUCH_SENSOR_DOWN) == true){
+					}
+				}
+				if (gpio_get_pin_value(QT1081_TOUCH_SENSOR_UP) == true) {
+					nuevoDato=0;
+					gpio_set_gpio_pin(LED3_GPIO);
+					while(gpio_get_pin_value(QT1081_TOUCH_SENSOR_UP) == true){
+					}
+				}
+								
+					
+				if(gpio_get_pin_value(QT1081_TOUCH_SENSOR_LEFT)){
+					binary[0]=binary[1];
+					binary[1]=binary[2];
+					binary[2]=nuevoDato;
+					while(gpio_get_pin_value(QT1081_TOUCH_SENSOR_LEFT)==true){
+					}
+					break;				
+				}
+				if(gpio_get_pin_value(QT1081_TOUCH_SENSOR_RIGHT)){
+					binary[2]=binary[1];
+					binary[1]=binary[0];
+					binary[0]=nuevoDato;
+					while(gpio_get_pin_value(QT1081_TOUCH_SENSOR_RIGHT)==true){
+					}
+					break;		
+				}
+			}
+		}	
+}
+
+

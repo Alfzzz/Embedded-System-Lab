@@ -1,0 +1,2 @@
+Sustituir los archivos .c y .h a los archivos que genera el wizard de ATMEL 7.
+El archivo de MATLAB generar el header de audio, el audio se graba con audacity con la resolución más baja y con formato PCM 8 bits

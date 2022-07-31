@@ -1,0 +1,180 @@
+/**
+ * \file
+ *
+ * \brief Empty user application template
+ *
+ */
+
+/**
+ * \mainpage User Application template doxygen documentation
+ *
+ * \par Empty user application template
+ *
+ * Bare minimum empty user application template
+ *
+ * \par Content
+ *
+ * -# Include the ASF header files (through asf.h)
+ * -# "Insert system clock initialization code here" comment
+ * -# Minimal main function that starts with a call to board_init()
+ * -# "Insert application code here" comment
+ *
+ */
+
+/*
+ * Include header files for all drivers that have been imported from
+ * Atmel Software Framework (ASF).
+ */
+/*
+ * Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
+ */
+#include <asf.h>
+
+
+#include <asf.h>
+
+
+/** \brief Main function to alter the state of the pin \c GPIO_PIN_EXAMPLE.
+ */
+
+void DecimalToBinary (int binary[4], int numero);
+
+int main(void)
+{
+	while(1){
+		int numeros [4] = {0 ,0 ,0 ,0}; ////Definición del arreglo de números.
+		int binary [4] = {0 ,0 ,0 ,0};
+		
+	
+		for (int i = 0; i < 4; i++){
+			while (gpio_get_pin_value(QT1081_TOUCH_SENSOR_ENTER) == false){ //While para selección de valor
+				DecimalToBinary(binary,numeros[i]);
+				if (binary[0] == 0){
+					gpio_set_gpio_pin(LED0_GPIO);
+				}
+				else{
+					gpio_clr_gpio_pin(LED0_GPIO);
+				}
+				if (binary[1] == 0){
+					gpio_set_gpio_pin(LED1_GPIO);
+				}
+				else{
+					gpio_clr_gpio_pin(LED1_GPIO);
+				}
+				if (binary[2] == 0){
+					gpio_set_gpio_pin(LED2_GPIO);
+				}
+				else{
+					gpio_clr_gpio_pin(LED2_GPIO);
+				}
+				if (binary[3] == 0){
+					gpio_set_gpio_pin(LED3_GPIO);
+				}
+				else{
+					gpio_clr_gpio_pin(LED3_GPIO);
+				}
+				if (gpio_get_pin_value(QT1081_TOUCH_SENSOR_RIGHT) == true) {
+					numeros[i]++;
+					if(numeros[i] >= 15){
+						numeros[i] = 15;
+					}
+					while(gpio_get_pin_value(QT1081_TOUCH_SENSOR_RIGHT) == true){
+					}
+			
+				}
+				if (gpio_get_pin_value(QT1081_TOUCH_SENSOR_LEFT) == true) {
+					if(numeros[i] == 0){
+						numeros[i] = 0;
+					}
+					else{
+						numeros[i]--;
+					}
+					while(gpio_get_pin_value(QT1081_TOUCH_SENSOR_LEFT) == true){
+					}
+				}
+			}
+			while (gpio_get_pin_value(QT1081_TOUCH_SENSOR_ENTER) == true){
+			}
+		}
+	
+	
+		while(1){
+			if (gpio_get_pin_value(QT1081_TOUCH_SENSOR_UP) == true){
+				int variableAND = (numeros[0]&numeros[1]&numeros[2]&numeros[3]);
+				DecimalToBinary(binary,variableAND);
+				if (binary[0] == 0){
+					gpio_set_gpio_pin(LED0_GPIO);
+				}
+				else{
+					gpio_clr_gpio_pin(LED0_GPIO);
+				}
+				if (binary[1] == 0){
+					gpio_set_gpio_pin(LED1_GPIO);
+				}
+				else{
+					gpio_clr_gpio_pin(LED1_GPIO);
+				}
+				if (binary[2] == 0){
+					gpio_set_gpio_pin(LED2_GPIO);
+				}
+				else{
+					gpio_clr_gpio_pin(LED2_GPIO);
+				}
+				if (binary[3] == 0){
+					gpio_set_gpio_pin(LED3_GPIO);
+				}
+				else{
+					gpio_clr_gpio_pin(LED3_GPIO);
+				}
+				break;
+			}
+			else if (gpio_get_pin_value(QT1081_TOUCH_SENSOR_DOWN) == true){
+				int variableOR = (numeros[0]|numeros[1]|numeros[2]|numeros[3]);
+				DecimalToBinary(binary,variableOR);
+					if (binary[0] == 0){
+						gpio_set_gpio_pin(LED0_GPIO);
+					}
+					else{
+						gpio_clr_gpio_pin(LED0_GPIO);
+					}
+					if (binary[1] == 0){
+						gpio_set_gpio_pin(LED1_GPIO);
+					}
+					else{
+						gpio_clr_gpio_pin(LED1_GPIO);
+					}
+					if (binary[2] == 0){
+						gpio_set_gpio_pin(LED2_GPIO);
+					}
+					else{
+						gpio_clr_gpio_pin(LED2_GPIO);
+					}
+					if (binary[3] == 0){
+						gpio_set_gpio_pin(LED3_GPIO);
+					}
+					else{
+						gpio_clr_gpio_pin(LED3_GPIO);
+					}
+				break;
+			}
+		}
+		while(gpio_get_pin_value(QT1081_TOUCH_SENSOR_ENTER) == false){	
+		}
+	}
+}
+
+//Conversor 
+
+void DecimalToBinary (int binary[4], int numero){
+	binary[0] = 0;
+	binary[1] = 0;
+	binary[2] = 0;
+	binary[3] = 0;
+	int j = 0;
+	while (numero>0){
+		binary [3-j] = numero%2;
+		numero = numero/2;
+		j++;
+	}
+}
+

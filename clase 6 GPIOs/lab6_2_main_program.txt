@@ -1,0 +1,75 @@
+#include <asf.h>
+
+
+/** \brief Main function to alter the state of the pin \c GPIO_PIN_EXAMPLE.
+ */
+
+void DecimalToBinary (int binary[3], int numero);
+
+int main(void)
+{
+	int numero = 0; ////Definición del arreglo de números.
+	int binary [3] = {0 ,0 ,0};
+	while(1){
+		
+			DecimalToBinary(binary,numero);
+			if (binary[0] == 0){
+				gpio_set_gpio_pin(LED0_GPIO);
+			}
+			else{
+				gpio_clr_gpio_pin(LED0_GPIO);
+			}
+			if (binary[1] == 0){
+				gpio_set_gpio_pin(LED1_GPIO);
+			}
+			else{
+				gpio_clr_gpio_pin(LED1_GPIO);
+			}
+			if (binary[2] == 0){
+				gpio_set_gpio_pin(LED2_GPIO);
+			}
+			else{
+				gpio_clr_gpio_pin(LED2_GPIO);
+			}
+			if (gpio_get_pin_value(QT1081_TOUCH_SENSOR_UP) == true) {
+				gpio_clr_gpio_pin(LED3_GPIO);
+				numero++;
+				if(numero >= 7){
+					numero = 7;
+				}
+				while(gpio_get_pin_value(QT1081_TOUCH_SENSOR_UP) == true){
+				}
+			
+			}
+			if (gpio_get_pin_value(QT1081_TOUCH_SENSOR_DOWN) == true) {
+				gpio_set_gpio_pin(LED3_GPIO);
+				if(numero== 0){
+					numero = 0;
+				}
+				else{
+					numero--;
+				}
+				while(gpio_get_pin_value(QT1081_TOUCH_SENSOR_DOWN) == true){
+				}
+			}
+		}
+
+	
+	
+	
+}
+
+//Conversor 
+
+void DecimalToBinary (int binary[3], int numero_dec){
+	binary[0] = 0;
+	binary[1] = 0;
+	binary[2] = 0;
+	int j = 0;
+	while (numero_dec>0){
+		binary [2-j] = numero_dec%2;
+		numero_dec = numero_dec/2;
+		j++;
+	}
+}
+

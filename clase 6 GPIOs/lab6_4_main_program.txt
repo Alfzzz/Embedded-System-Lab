@@ -1,0 +1,87 @@
+#include <asf.h>
+
+/** \brief Main function to alter the state of the pin \c GPIO_PIN_EXAMPLE.
+ */
+
+int main(void)
+{
+	int contador=0;
+	int direcc=1;
+	while(1){
+	
+		switch(contador){
+			case 0:
+			gpio_clr_gpio_pin(LED0_GPIO);
+			gpio_set_gpio_pin(LED1_GPIO);
+			gpio_set_gpio_pin(LED2_GPIO);
+			gpio_set_gpio_pin(LED3_GPIO);
+			gpio_clr_gpio_pin(62);
+			gpio_clr_gpio_pin(63);
+			direcc=1;
+			delay_ms(100);
+			break;
+						
+			case 1:
+			gpio_set_gpio_pin(LED0_GPIO);
+			gpio_clr_gpio_pin(LED1_GPIO);
+			gpio_set_gpio_pin(LED2_GPIO);
+			gpio_set_gpio_pin(LED3_GPIO);
+			gpio_clr_gpio_pin(62);
+			gpio_clr_gpio_pin(63);
+			delay_ms(100);
+			break;
+			
+			case 2:
+			gpio_set_gpio_pin(LED0_GPIO);
+			gpio_set_gpio_pin(LED1_GPIO);
+			gpio_clr_gpio_pin(LED2_GPIO);
+			gpio_set_gpio_pin(LED3_GPIO);
+			gpio_clr_gpio_pin(62);
+			gpio_clr_gpio_pin(63);
+			delay_ms(100);
+			break;
+			
+			case 3:
+			gpio_set_gpio_pin(LED0_GPIO);
+			gpio_set_gpio_pin(LED1_GPIO);
+			gpio_set_gpio_pin(LED2_GPIO);
+			gpio_clr_gpio_pin(LED3_GPIO);
+			gpio_clr_gpio_pin(62);
+			gpio_clr_gpio_pin(63);
+			delay_ms(100);
+			break;
+			
+			case 4:
+			gpio_set_gpio_pin(LED0_GPIO);
+			gpio_set_gpio_pin(LED1_GPIO);
+			gpio_set_gpio_pin(LED2_GPIO);
+			gpio_set_gpio_pin(LED3_GPIO);
+			gpio_set_gpio_pin(62);
+			gpio_clr_gpio_pin(63);
+			delay_ms(100);
+			break;
+			
+			case 5:
+			gpio_set_gpio_pin(LED0_GPIO);
+			gpio_set_gpio_pin(LED1_GPIO);
+			gpio_set_gpio_pin(LED2_GPIO);
+			gpio_set_gpio_pin(LED3_GPIO);
+			gpio_clr_gpio_pin(62);
+			gpio_set_gpio_pin(63);
+			direcc=0;
+			delay_ms(100);
+			break;
+		}	
+			if (direcc==1)
+			{
+				contador++;
+			}
+			else
+			{
+				contador--;
+			}
+		}
+}
+
+
+
